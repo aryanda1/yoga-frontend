@@ -19,6 +19,10 @@ export const btnStyles = css`
   &:hover {
     background: #f9735b;
   }
+  &:disabled {
+    cursor: no-drop;
+    pointer-events: all;
+  }
 `;
 
 export default Button;

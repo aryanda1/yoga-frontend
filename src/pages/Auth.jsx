@@ -12,17 +12,94 @@ import {
   FormControl,
 } from "@mui/material";
 import { css } from "@emotion/react";
-import { useState } from "react";
+import { useReducer, useState } from "react";
 import { btnStyles } from "../components/GlobalComponents/Button";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import useLogin from "../customHooksAndServices/loginHook";
 import useRegister from "../customHooksAndServices/registrationHook";
 import useAuth from "../customHooksAndServices/authContextHook";
-const intRegex = /^\d*$/;
+const INT_REGEX = /^\d*$/;
+
+const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+const EMAIL_REGEX = /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,4}$/;
+
+const initialErrorState = {
+  username: "",
+  password: "",
+  passwordMatch: "",
+  registerAge: "",
+  registerEmail: "",
+  registerFirstName: "",
+  registerLastName: "",
+};
+
+const errorReducer = (state, action) => {
+  switch (action.type) {
+    case "resetAllErrors":
+      state.username = "";
+      state.password = "";
+      state.passwordMatch = "";
+      state.registerFirstName = "";
+      state.registerLastName = "";
+      state.registerAge = "";
+      state.registerEmail = "";
+      return { ...state };
+    case "setUsernameError":
+      state.username = action.payload;
+      return { ...state };
+    case "setPasswordError":
+      state.password = action.payload;
+      return { ...state };
+    case "setPasswordMatchError":
+      state.passwordMatch = action.payload;
+      return { ...state };
+    case "setRegisterAgeError":
+      state.registerAge = action.payload;
+      return { ...state };
+    case "setRegisterEmailError":
+      state.registerEmail = action.payload;
+      return { ...state };
+    case "setRegisterFirstNameError":
+      state.registerFirstName = action.payload;
+      return { ...state };
+    case "setRegisterLastNameError":
+      state.registerLastName = action.payload;
+      return { ...state };
+    case "resetFirstNameError":
+      state.registerFirstName = "";
+      return { ...state };
+    case "resetLastNameError":
+      state.registerLastName = "";
+      return { ...state };
+    case "resetEmailError":
+      state.registerEmail = "";
+      return { ...state };
+    case "resetAgeError":
+      state.registerAge = "";
+      return { ...state };
+    case "resetPasswordMatchError":
+      state.passwordMatch = "";
+      return { ...state };
+    case "resetUsernameError":
+      state.username = "";
+      return { ...state };
+    case "resetPasswordError":
+      state.password = "";
+      return { ...state };
+    default:
+      return state;
+  }
+};
+
 function Auth() {
   const [searchParams] = useSearchParams();
   const navigateTo = useNavigate();
+  const [errorState, dispatchError] = useReducer(
+    errorReducer,
+    initialErrorState
+  );
   const isLogin = searchParams.get("mode") === "login";
   const [requestInProgress, setRequestInProgress] = useState(false);
   const { login } = useLogin();
@@ -36,14 +113,105 @@ function Auth() {
     lastName: "",
     age: "",
     batch: "1",
+    confirmPassword: "",
   });
-  function formSubmitHandler(e) {
-    e.preventDefault();
-  }
+
   function inputChangeHandler(e) {
-    if (e.target.name === "age" && !intRegex.test(e.target.value)) {
+    if (e.target.name === "age" && !INT_REGEX.test(e.target.value)) {
       return;
     }
+
+    switch (e.target.name) {
+      case "age":
+        dispatchError({ type: "resetAgeError" });
+        if (parseInt(e.target.value) < 18)
+          dispatchError({
+            type: "setRegisterAgeError",
+            payload: "Age must be above 18",
+          });
+        else if (parseInt(e.target.value) > 65)
+          dispatchError({
+            type: "setRegisterAgeError",
+            payload: "Age must be below 65",
+          });
+        break;
+      case "firstName":
+        dispatchError({ type: "resetFirstNameError" });
+        if (e.target.value === "")
+          dispatchError({
+            type: "setRegisterFirstNameError",
+            payload: "First Name cannot be empty",
+          });
+        else if (e.target.value.length < 3)
+          dispatchError({
+            type: "setRegisterFirstNameError",
+            payload: "First Name must be atleast 3 characters",
+          });
+        break;
+      case "lastName":
+        dispatchError({ type: "resetLastNameError" });
+        if (e.target.value === "")
+          dispatchError({
+            type: "setRegisterLastNameError",
+            payload: "Last Name cannot be empty",
+          });
+        else if (e.target.value.length < 3)
+          dispatchError({
+            type: "setRegisterLastNameError",
+            payload: "Last Name must be atleast 3 characters",
+          });
+        break;
+      case "email":
+        dispatchError({ type: "resetEmailError" });
+        if (e.target.value === "")
+          dispatchError({
+            type: "setRegisterEmailError",
+            payload: "Email cannot be empty",
+          });
+        else if (!EMAIL_REGEX.test(e.target.value))
+          dispatchError({
+            type: "setRegisterEmailError",
+            payload: "Email is not valid",
+          });
+        break;
+      case "confirmPassword":
+        dispatchError({ type: "resetPasswordMatchError" });
+        const passMatch = input.password === e.target.value;
+        if (!passMatch && input.password !== "")
+          dispatchError({
+            type: "setPasswordMatchError",
+            payload: "Passwords do not match",
+          });
+        break;
+      case "password":
+        dispatchError({ type: "resetPasswordError" });
+        if (e.target.value === "")
+          dispatchError({
+            type: "setPasswordError",
+            payload: "Password cannot be empty",
+          });
+        else if (!PWD_REGEX.test(e.target.value))
+          dispatchError({
+            type: "setPasswordError",
+            payload:
+              "Must be 8-24 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character.",
+          });
+        break;
+      case "username":
+        dispatchError({ type: "resetUsernameError" });
+        if (e.target.value === "")
+          dispatchError({
+            type: "setUsernameError",
+            payload: "Username cannot be empty",
+          });
+        else if (!USER_REGEX.test(e.target.value))
+          dispatchError({
+            type: "setUsernameError",
+            payload:
+              "Must be 4-24 characters long, contain only letters, numbers, and underscores, and start with a letter",
+          });
+    }
+
     setInput((prev) => {
       return { ...prev, [e.target.name]: e.target.value };
     });
@@ -53,6 +221,10 @@ function Auth() {
     setRequestInProgress(true);
     e.preventDefault();
     console.log(input);
+    if (errorState.username || errorState.password) {
+      setRequestInProgress(false);
+      return;
+    }
     const { username, password } = input;
     console.log(username, password);
     if (!username || !password) {
@@ -70,6 +242,17 @@ function Auth() {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    if (
+      errorState.username ||
+      errorState.password ||
+      errorState.passwordMatch ||
+      errorState.registerAge ||
+      errorState.registerEmail ||
+      errorState.registerFirstName ||
+      errorState.registerLastName
+    ) {
+      return;
+    }
     let { firstName, lastName, username, email, password, age, batch } = input;
     console.log(input);
     if (
@@ -128,6 +311,8 @@ function Auth() {
                     name="firstName"
                     onChange={inputChangeHandler}
                     value={input.firstName}
+                    error={errorState.registerFirstName !== ""}
+                    helperText={errorState.registerFirstName}
                   />
                   <TextField
                     id="outlined-basic"
@@ -139,6 +324,8 @@ function Auth() {
                     name="lastName"
                     onChange={inputChangeHandler}
                     value={input.lastName}
+                    error={errorState.registerLastName !== ""}
+                    helperText={errorState.registerLastName}
                   />
                   <TextField
                     id="outlined-basic"
@@ -149,6 +336,8 @@ function Auth() {
                     name="age"
                     onChange={inputChangeHandler}
                     value={input.age}
+                    error={errorState.registerAge !== ""}
+                    helperText={errorState.registerAge}
                   />
                 </div>
               </div>
@@ -164,6 +353,8 @@ function Auth() {
                     name="email"
                     onChange={inputChangeHandler}
                     value={input.email}
+                    error={errorState.registerEmail !== ""}
+                    helperText={errorState.registerEmail}
                   />
                   <TextField
                     id="outlined-basic"
@@ -171,10 +362,11 @@ function Auth() {
                     variant="outlined"
                     className={styles.input}
                     sx={{ flex: 1 }}
-                    // fullWidth
                     name="username"
                     onChange={inputChangeHandler}
                     value={input.username}
+                    error={errorState.username !== ""}
+                    helperText={errorState.username}
                   />
                   <TextField
                     id="outlined-basic"
@@ -185,6 +377,20 @@ function Auth() {
                     name="password"
                     onChange={inputChangeHandler}
                     value={input.password}
+                    error={errorState.password !== ""}
+                    helperText={errorState.password}
+                  />
+                  <TextField
+                    id="outlined-basic"
+                    label="Confirm Password"
+                    variant="outlined"
+                    className={styles.input}
+                    fullWidth
+                    name="confirmPassword"
+                    onChange={inputChangeHandler}
+                    value={input.confirmPassword}
+                    error={errorState.passwordMatch !== ""}
+                    helperText={errorState.passwordMatch}
                   />
                 </div>
               </div>
@@ -256,6 +462,8 @@ function Auth() {
                 name="username"
                 onChange={inputChangeHandler}
                 value={input.username}
+                error={errorState.username !== ""}
+                helperText={errorState.username}
               />
               <TextField
                 id="outlined-basic"
@@ -267,6 +475,8 @@ function Auth() {
                 margin="dense"
                 onChange={inputChangeHandler}
                 value={input.password}
+                error={errorState.password !== ""}
+                helperText={errorState.password}
               />
             </>
           )}
@@ -294,6 +504,16 @@ function Auth() {
             css={btnStyles}
             size="large"
             sx={{ mt: 2, padding: 3 }}
+            disabled={
+              requestInProgress ||
+              errorState.username !== "" ||
+              errorState.password !== "" ||
+              errorState.passwordMatch !== "" ||
+              errorState.registerAge !== "" ||
+              errorState.registerEmail !== "" ||
+              errorState.registerFirstName !== "" ||
+              errorState.registerLastName !== ""
+            }
           >
             {isLogin ? "Signin" : "Signup"}
           </Button>
