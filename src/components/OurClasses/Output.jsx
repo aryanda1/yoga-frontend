@@ -1,4 +1,3 @@
-import Button from "../GlobalComponents/Button";
 import { css } from "@emotion/core";
 
 const Output = ({ title, info, img }) => (
@@ -6,7 +5,6 @@ const Output = ({ title, info, img }) => (
     <img src={img} alt="class" />
     <h2>{title}</h2>
     <p>{info}</p>
-    <Button text="VIEW SCHEDULE" />
   </div>
 );
 
@@ -14,8 +12,9 @@ const styles = css`
   text-align: left;
   img {
     width: 100%;
-    height: auto;
+    height: 300px;
     display: block;
+    object-fit: cover;
   }
   h2 {
     margin: 34px 0 0 0;

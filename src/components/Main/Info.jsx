@@ -6,9 +6,9 @@ import { Link } from "react-router-dom";
 
 const Info = () => (
   <div css={styles} className="info">
-    <p>WORK HARDER, GET STRONGER</p>
+    <p>EMBRACE INNER PEACE, FIND BALANCE</p>
     <h1>
-      EASY WITH OUR <span>GYM</span>
+      SIMPLIFY WITH OUR <span>YOGA</span>
     </h1>
     <Link to="/auth?mode=signup" css={btnStyles}>
       BECOME A MEMBER.

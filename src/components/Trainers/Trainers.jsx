@@ -21,20 +21,20 @@ const Trainers = () => (
     </p>
     <Container>
       <TrainerCard
-        title="Strength Trainer"
-        name="Bret D. Bowers"
+        title="Morning Sadhana"
+        name="Prasant Jakhmala"
         desc="Bitters cliche tattooed 8-bit distillery mustache. Keytar succulents gluten-free vegan church-key pour-over seitan flannel."
         img={TrainerOneBg}
       />
       <TrainerCard
-        title="Muscle Trainer"
-        name="Hector T. Daigl"
+        title="Hath Yoga"
+        name="SUbham Uniyal"
         desc="Bitters cliche tattooed 8-bit distillery mustache. Keytar succulents gluten-free vegan church-key pour-over seitan flannel."
         img={TrainerTwoBg}
       />
       <TrainerCard
-        title="Power Trainer"
-        name="Paul D. Newman"
+        title="SOulful Asanas"
+        name="Shivam Joshi"
         desc="Bitters cliche tattooed 8-bit distillery mustache. Keytar succulents gluten-free vegan church-key pour-over seitan flannel."
         img={TrainerThreeBg}
       />

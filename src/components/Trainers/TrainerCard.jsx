@@ -22,7 +22,9 @@ const styles = css`
   text-align: left;
   border-radius: 4px;
   img {
-    width: 100%;
+    width: auto;
+    height: 260px;
+    object-fit: cover;
   }
   h5 {
     color: #ed563b;

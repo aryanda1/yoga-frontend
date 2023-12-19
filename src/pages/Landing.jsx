@@ -10,7 +10,6 @@ import Contact from "../components/Contact/Contact";
 const Landing = () => (
   <div>
     <Main />
-    <GymProgram />
     <Member />
     <Classes />
     <Schedule />

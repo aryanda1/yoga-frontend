@@ -11,9 +11,11 @@ const Member = ({ text }) => (
       DON’T <span>THINK</span>, BEGIN <span>TODAY</span>!
     </h2>
     <p>
-      Ut consectetur, metus sit amet aliquet placerat, enim est ultricies
-      ligula, sit amet dapibus odio augue eget libero.
-      <br /> Morbi tempus mauris a nisi luctus imperdiet.
+      Experience the serenity of our yoga sanctuary. Whether you're seeking
+      inner peace, strength, or flexibility, our classes offer a path to
+      well-being.
+      <br />
+      Don't overthink it; start your transformative journey now!"
     </p>
     <Link to="/auth?mode=signup" css={btnStyles}>
       BECOME A MEMBER.

@@ -2,7 +2,6 @@ import { css } from "@emotion/react";
 
 import React from "react";
 import DumbbellBg from "../Image/dumbbellOrange.png";
-import Button from "../GlobalComponents/Button";
 
 const LinksContainer = ({ setTraining, training }) => (
   <div css={styles} className="linksContainer">
@@ -10,27 +9,26 @@ const LinksContainer = ({ setTraining, training }) => (
       className={training === "FirstClass" ? "active" : ""}
       onClick={() => setTraining("FirstClass")}
     >
-      <img src={DumbbellBg} alt="dumbbell" /> First Training Class
+      <img src={DumbbellBg} alt="dumbbell" /> First Yoga Class
     </button>
     <button
       className={training === "SecondClass" ? "active" : ""}
       onClick={() => setTraining("SecondClass")}
     >
-      <img src={DumbbellBg} alt="dumbbell" /> Second Training Class
+      <img src={DumbbellBg} alt="dumbbell" /> Second Yoga Class
     </button>
     <button
       className={training === "ThirdClass" ? "active" : ""}
       onClick={() => setTraining("ThirdClass")}
     >
-      <img src={DumbbellBg} alt="dumbbell" /> Third Training Class
+      <img src={DumbbellBg} alt="dumbbell" /> Third Yoga Class
     </button>
     <button
       className={training === "FourthClass" ? "active" : ""}
       onClick={() => setTraining("FourthClass")}
     >
-      <img src={DumbbellBg} alt="dumbbell" /> Fourth Training Class
+      <img src={DumbbellBg} alt="dumbbell" /> Fourth Yoga Class
     </button>
-    <Button text="View All Schedules" />
   </div>
 );
 
