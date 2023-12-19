@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 
 import React from "react";
-import DumbbellBg from "../Image/dumbbellOrange.png";
+import YogaIcon from "../Image/yoga.svg";
 
 const LinksContainer = ({ setTraining, training }) => (
   <div css={styles} className="linksContainer">
@@ -9,25 +9,25 @@ const LinksContainer = ({ setTraining, training }) => (
       className={training === "FirstClass" ? "active" : ""}
       onClick={() => setTraining("FirstClass")}
     >
-      <img src={DumbbellBg} alt="dumbbell" /> First Yoga Class
+      <img src={YogaIcon} alt="yoga icon" /> First Yoga Class
     </button>
     <button
       className={training === "SecondClass" ? "active" : ""}
       onClick={() => setTraining("SecondClass")}
     >
-      <img src={DumbbellBg} alt="dumbbell" /> Second Yoga Class
+      <img src={YogaIcon} alt="yoga icon" /> Second Yoga Class
     </button>
     <button
       className={training === "ThirdClass" ? "active" : ""}
       onClick={() => setTraining("ThirdClass")}
     >
-      <img src={DumbbellBg} alt="dumbbell" /> Third Yoga Class
+      <img src={YogaIcon} alt="yoga icon" /> Third Yoga Class
     </button>
     <button
       className={training === "FourthClass" ? "active" : ""}
       onClick={() => setTraining("FourthClass")}
     >
-      <img src={DumbbellBg} alt="dumbbell" /> Fourth Yoga Class
+      <img src={YogaIcon} alt="yoga icon" /> Fourth Yoga Class
     </button>
   </div>
 );
@@ -49,6 +49,11 @@ const styles = css`
     border: none;
     outline: none;
     font-size: 20px;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+    &:hover {
+      color: hsl(9, 83%, 78%);
+    }
     &.active {
       color: #ed563b;
     }
