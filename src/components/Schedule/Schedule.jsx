@@ -18,9 +18,11 @@ const Schedule = () => {
       </h2>
       <Icon />
       <p>
-        Nunc urna sem, laoreet ut metus id, aliquet consequat magna. Sed viverra
+        Explore a balanced lineup of yoga sessions designed to harmonize your
+        mind and body.
         <br />
-        ipsum dolor, ultricies fermentum massa consequat eu.
+        Discover the perfect class to align with your wellness goals and embrace
+        your yoga journey with us
       </p>
       <Container>
         <ScheduleLinks setDay={setDay} day={day} />

@@ -12,7 +12,7 @@ const Results = ({ training }) => (
     {training === "FirstClass" && (
       <Output
         title="First Yoga Class"
-        info="Phasellus convallis mauris sed elementum vulputate. Donec posuere leo sed dui eleifend hendrerit. Sed suscipit suscipit erat, sed vehicula ligula. Aliquam ut sem fermentum sem tincidunt lacinia gravida aliquam nunc. Morbi quis erat imperdiet, molestie nunc ut, accumsan diam."
+        info="Morning Sadhana: Immerse yourself in a transformative practice from 6-7 am to start your day with serenity and purpose. This early-morning session combines gentle postures, breathwork, and mindfulness, setting a positive tone for the rest of your day."
         img={ClassOneBg}
       />
     )}
@@ -20,14 +20,14 @@ const Results = ({ training }) => (
     {training === "SecondClass" && (
       <Output
         title="Second Yoga Class"
-        info="Integer dapibus, est vel dapibus mattis, sem mauris luctus leo, ac pulvinar quam tortor a velit. Praesent ultrices erat ante, in ultricies augue ultricies faucibus. Nam tellus nibh, ullamcorper at mattis non, rhoncus sed massa. Cras quis pulvinar eros. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus."
+        info="Hatha Bliss: Join our experienced Hatha Yoga teacher from 7-8 am for a revitalizing session. Explore the balance of strength and flexibility through traditional poses, fostering a sense of well-being and tranquility in the heart of your morning routine."
         img={ClassTwoBg}
       />
     )}
     {training === "ThirdClass" && (
       <Output
         title="Third Yoga Class"
-        info="Fusce laoreet malesuada rhoncus. Donec ultricies diam tortor, id auctor neque posuere sit amet. Aliquam pharetra, augue vel cursus porta, nisi tortor vulputate sapien, id scelerisque felis magna id felis. Proin neque metus, pellentesque pharetra semper vel, accumsan a neque."
+        info="Soulful Asanas: Elevate your practice with our Soulful Asanas specialist every day from 8-9 am. Immerse yourself in a harmonious blend of mindful movements and deep stretches, connecting your body and soul for a rejuvenating experience to carry you through the day."
         img={ClassThreeBg}
       />
     )}
@@ -35,7 +35,7 @@ const Results = ({ training }) => (
     {training === "FourthClass" && (
       <Output
         title="Fourth Yoga Class"
-        info="Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aenean ultrices elementum odio ac tempus. Etiam eleifend orci lectus, eget venenatis ipsum commodo et."
+        info="Evening Wellness: Join our Women's Wellness Yoga teacher for a rejuvenating session from 5-6 pm. Embrace the tranquility of evening practice, tailored to enhance your well-being. Nurture your body and soul with gentle poses, fostering balance and relaxation."
         img={ClassFourBg}
       />
     )}

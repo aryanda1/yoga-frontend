@@ -33,7 +33,7 @@ const Trainers = () => (
         img={TrainerTwoBg}
       />
       <TrainerCard
-        title="SOulful Asanas"
+        title="Soulful Asanas"
         name="Shivam Joshi"
         desc="Bitters cliche tattooed 8-bit distillery mustache. Keytar succulents gluten-free vegan church-key pour-over seitan flannel."
         img={TrainerThreeBg}

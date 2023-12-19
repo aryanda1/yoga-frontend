@@ -12,7 +12,7 @@ const styles = css`
   text-align: left;
   img {
     width: 100%;
-    height: 300px;
+    height: 330px;
     display: block;
     object-fit: cover;
   }
