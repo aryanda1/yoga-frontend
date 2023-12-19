@@ -19,10 +19,8 @@ const Schedule = () => {
       <Icon />
       <p>
         Explore a balanced lineup of yoga sessions designed to harmonize your
-        mind and body.
-        <br />
-        Discover the perfect class to align with your wellness goals and embrace
-        your yoga journey with us
+        mind and body. Discover the perfect class to align with your wellness
+        goals and embrace your yoga journey with us
       </p>
       <Container>
         <ScheduleLinks setDay={setDay} day={day} />
@@ -52,14 +50,15 @@ const styles = css`
     color: #fff;
     font-size: 16px;
     line-height: 1.7;
-    margin: 20px 0;
+    margin: 20px auto;
+    max-width: 80ch;
   }
   .container {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-  @media (max-width: 640px) {
+  @media (max-width: 768px) {
     p {
       padding: 0 30px;
       br {

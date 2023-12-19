@@ -7,74 +7,34 @@ const Table = ({ day }) => {
     <table css={styles}>
       <tbody>
         <tr>
-          <td>Fitness Class</td>
-          <td>
-            <span className={day === "Monday" ? "" : "hidden"}>
-              10:00AM - 11:30AM
-            </span>
-          </td>
-          <td>
-            <span className={day === "Tuesday" ? "" : "hidden"}>
-              2:00PM - 3:30PM
-            </span>
-          </td>
-          <td>William G. Stewart</td>
+          <td>Class Name</td>
+          <td>Timing</td>
+          <td>Teacher</td>
+          <td>Fees</td>
         </tr>
         <tr>
-          <td>Muscle Training</td>
-          <td>
-            <span className={day === "Friday" ? "" : "hidden"}>
-              10:00AM - 11:30AM
-            </span>
-          </td>
-          <td>
-            <span className={day === "Thursday" ? "" : "hidden"}>
-              2:00PM - 3:30PM
-            </span>
-          </td>
-          <td>Boyd C. Harris</td>
+          <td>Morning Sadhana</td>
+          <td>06:00AM - 07:00AM</td>
+          <td>Prasant Jakhmala</td>
+          <td>Rs 500</td>
         </tr>
         <tr>
-          <td>Body Building </td>
-          <td>
-            <span className={day === "Tuesday" ? "" : "hidden"}>
-              10:00AM - 11:30AM
-            </span>
-          </td>
-          <td>
-            <span className={day === "Monday" ? "" : "hidden"}>
-              2:00PM - 3:30PM
-            </span>
-          </td>
-          <td>Boyd C. Harris</td>
+          <td>Hath Yoga</td>
+          <td>07:00AM - 08:00AM</td>
+          <td>Subham Uniyal</td>
+          <td>Rs 500</td>
         </tr>
         <tr>
-          <td>Yoga Training Class </td>
-          <td>
-            <span className={day === "Wednesday" ? "" : "hidden"}>
-              10:00AM - 11:30AM
-            </span>
-          </td>
-          <td>
-            <span className={day === "Friday" ? "" : "hidden"}>
-              2:00PM - 3:30PM
-            </span>
-          </td>
-          <td>Hector T. Daigle</td>
+          <td>Soulful Asanas</td>
+          <td>10:00AM - 11:00AM</td>
+          <td>Shivam Joshi</td>
+          <td>Rs 500</td>
         </tr>
         <tr>
-          <td>Advanced Training </td>
-          <td>
-            <span className={day === "Thursday" ? "" : "hidden"}>
-              10:00AM - 11:30AM
-            </span>
-          </td>
-          <td>
-            <span className={day === "Wednesday" ? "" : "hidden"}>
-              2:00PM - 3:30PM
-            </span>
-          </td>
-          <td>Bret D. Bowers</td>
+          <td>Women Wellness </td>
+          <td>05:00PM - 06:00PM</td>
+          <td>Taniya</td>
+          <td>Rs 500</td>
         </tr>
       </tbody>
     </table>

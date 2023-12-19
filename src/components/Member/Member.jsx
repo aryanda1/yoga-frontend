@@ -3,7 +3,7 @@ import { btnStyles } from "../GlobalComponents/Button";
 import { Link } from "react-router-dom";
 import React from "react";
 import Button from "../GlobalComponents/Button";
-import GymOverlayBg from "../Image/gymOverlayBg.jpg";
+import GymOverlayBg from "../Image/overlayBg.webp";
 
 const Member = ({ text }) => (
   <section css={styles} className="member">
@@ -13,9 +13,7 @@ const Member = ({ text }) => (
     <p>
       Experience the serenity of our yoga sanctuary. Whether you're seeking
       inner peace, strength, or flexibility, our classes offer a path to
-      well-being.
-      <br />
-      Don't overthink it; start your transformative journey now!"
+      well-being. Don't overthink it; start your transformative journey now!"
     </p>
     <Link to="/auth?mode=signup" css={btnStyles}>
       BECOME A MEMBER.
@@ -42,7 +40,8 @@ const styles = css`
     color: #fff;
     font-size: 16px;
     line-height: 1.7;
-    margin: 20px 0;
+    max-width: 80ch;
+    margin: 20px auto;
   }
   @media (max-width: 850px) {
     h2 {

@@ -16,9 +16,9 @@ const Classes = ({ text }) => {
       </h2>
       <Icon />
       <p>
-        Nunc urna sem, laoreet ut metus id, aliquet consequat magna. Sed viverra
-        <br />
-        ipsum dolor, ultricies fermentum massa consequat eu.
+        Explore a diverse range of yoga sessions, carefully curated to suit all
+        levels and preferences. From morning serenity to evening bliss, discover
+        the perfect class to elevate your yoga journey."
       </p>
       <Container>
         <LinksContainer setTraining={setTraining} training={training} />
@@ -45,6 +45,8 @@ const styles = css`
     color: #7a7a7a;
     font-size: 15px;
     line-height: 1.7;
+    max-width: 80ch;
+    margin-inline: auto;
   }
   .container {
     display: flex;
@@ -57,7 +59,7 @@ const styles = css`
       align-items: center;
     }
   }
-  @media (max-width: 580px) {
+  @media (max-width: 768px) {
     p {
       padding: 0 20px;
       br {

@@ -15,27 +15,27 @@ const Trainers = () => (
     </h2>
     <Icon />
     <p>
-      Nunc urna sem, laoreet ut metus id, aliquet consequat magna. Sed viverra{" "}
-      <br />
-      ipsum dolor, ultricies fermentum massa consequat eu.
+      Guiding your wellness journey with knowledge and passion, our experienced
+      instructors bring <br /> expertise to every class for a transformative and
+      enriching yoga experience.
     </p>
     <Container>
       <TrainerCard
         title="Morning Sadhana"
         name="Prasant Jakhmala"
-        desc="Bitters cliche tattooed 8-bit distillery mustache. Keytar succulents gluten-free vegan church-key pour-over seitan flannel."
+        desc="Experience the tranquility of Morning Sadhana led by Prasant Jakhmala, a transformative session to kickstart your day with serene mindfulness."
         img={TrainerOneBg}
       />
       <TrainerCard
         title="Hath Yoga"
-        name="SUbham Uniyal"
-        desc="Bitters cliche tattooed 8-bit distillery mustache. Keytar succulents gluten-free vegan church-key pour-over seitan flannel."
+        name="Subham Uniyal"
+        desc="Join Subham Uniyal for an invigorating Hath Yoga class, blending traditional postures and breathwork to enhance strength, flexibility, and overall well-being."
         img={TrainerTwoBg}
       />
       <TrainerCard
         title="Soulful Asanas"
         name="Shivam Joshi"
-        desc="Bitters cliche tattooed 8-bit distillery mustache. Keytar succulents gluten-free vegan church-key pour-over seitan flannel."
+        desc="Join Shivam Joshi for a thrilling experience of Soulful Asanas, a blend of ancient and modern asanas to enhance your overall well-being and relaxation."
         img={TrainerThreeBg}
       />
     </Container>
