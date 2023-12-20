@@ -12,10 +12,11 @@ import {
   FormControl,
 } from "@mui/material";
 import { css } from "@emotion/react";
-import { useReducer, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { btnStyles } from "../components/GlobalComponents/Button";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { initialErrorState, errorReducer } from "../state/AuthReducer";
 import useLogin from "../customHooksAndServices/loginHook";
 import useRegister from "../customHooksAndServices/registrationHook";
 import useAuth from "../customHooksAndServices/authContextHook";
@@ -24,74 +25,6 @@ const INT_REGEX = /^\d*$/;
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const EMAIL_REGEX = /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,4}$/;
-
-const initialErrorState = {
-  username: "",
-  password: "",
-  passwordMatch: "",
-  registerAge: "",
-  registerEmail: "",
-  registerFirstName: "",
-  registerLastName: "",
-};
-
-const errorReducer = (state, action) => {
-  switch (action.type) {
-    case "resetAllErrors":
-      state.username = "";
-      state.password = "";
-      state.passwordMatch = "";
-      state.registerFirstName = "";
-      state.registerLastName = "";
-      state.registerAge = "";
-      state.registerEmail = "";
-      return { ...state };
-    case "setUsernameError":
-      state.username = action.payload;
-      return { ...state };
-    case "setPasswordError":
-      state.password = action.payload;
-      return { ...state };
-    case "setPasswordMatchError":
-      state.passwordMatch = action.payload;
-      return { ...state };
-    case "setRegisterAgeError":
-      state.registerAge = action.payload;
-      return { ...state };
-    case "setRegisterEmailError":
-      state.registerEmail = action.payload;
-      return { ...state };
-    case "setRegisterFirstNameError":
-      state.registerFirstName = action.payload;
-      return { ...state };
-    case "setRegisterLastNameError":
-      state.registerLastName = action.payload;
-      return { ...state };
-    case "resetFirstNameError":
-      state.registerFirstName = "";
-      return { ...state };
-    case "resetLastNameError":
-      state.registerLastName = "";
-      return { ...state };
-    case "resetEmailError":
-      state.registerEmail = "";
-      return { ...state };
-    case "resetAgeError":
-      state.registerAge = "";
-      return { ...state };
-    case "resetPasswordMatchError":
-      state.passwordMatch = "";
-      return { ...state };
-    case "resetUsernameError":
-      state.username = "";
-      return { ...state };
-    case "resetPasswordError":
-      state.password = "";
-      return { ...state };
-    default:
-      return state;
-  }
-};
 
 function Auth() {
   const [searchParams] = useSearchParams();
@@ -115,6 +48,7 @@ function Auth() {
     batch: "1",
     confirmPassword: "",
   });
+  useEffect(() => dispatchError({ type: "resetAllErrors" }), [isLogin]);
 
   function inputChangeHandler(e) {
     if (e.target.name === "age" && !INT_REGEX.test(e.target.value)) {
