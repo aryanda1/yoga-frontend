@@ -34,7 +34,7 @@ const styles = css`
   border: 0;
   cursor: pointer;
   display: none;
-  margin-inline: auto 2rem;
+  margin-left: auto;
   .line {
     width: 2rem;
     height: 0.2rem;

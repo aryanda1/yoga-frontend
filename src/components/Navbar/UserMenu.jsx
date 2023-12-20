@@ -73,17 +73,23 @@ const style = css`
   }
 
   /* Transition the :backdrop when the dialog modal is promoted to the top layer */
-
+  * + * {
+    margin-top: 5px;
+  }
   a {
     display: block;
     text-wrap: nowrap;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.6);
-    padding-bottom: 5px;
-    color: #fff;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.6);
+    padding-bottom: 8px;
+    color: rgba(255, 255, 255, 0.8);
+    &:hover {
+      color: white;
+    }
   }
   button {
     background: #ed563b;
     transition: background 500ms ease-in-out;
+    margin-top: 10px;
     &:hover {
       background: #f9735b;
     }
