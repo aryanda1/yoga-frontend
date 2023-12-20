@@ -5,8 +5,14 @@ import Logo from "./Logo";
 import LinksContainer from "./LinksContainer";
 import Container from "../GlobalComponents/Container";
 import Hamburger from "./Hamburger";
+import UserMenu from "./UserMenu";
+import useAuth from "../../customHooksAndServices/authContextHook";
+
 const Nav = () => {
   const [hidden, setHidden] = useState(true);
+  const [showUserMenu, setShowUserMenu] = useState(false);
+  const { user } = useAuth();
+  const isLoggedIn = user.accessToken !== "";
   return (
     <nav css={styles}>
       <Container>
@@ -15,7 +21,20 @@ const Nav = () => {
           menuClickHandler={() => setHidden(!hidden)}
           closed={hidden}
         ></Hamburger>
-        <LinksContainer hidden={hidden} onClick={() => setHidden(!hidden)} />
+        <LinksContainer
+          hidden={hidden}
+          onClick={() => setHidden(!hidden)}
+          isLoggedIn={isLoggedIn}
+        />
+        {isLoggedIn && (
+          <div
+            style={{ position: "relative" }}
+            onClick={() => setShowUserMenu(!showUserMenu)}
+          >
+            <img src="https://i.pinimg.com/736x/7f/79/6d/7f796d57218d9cd81a92d9e6e8e51ce4--free-avatars-online-profile.jpg" />
+            <UserMenu show={showUserMenu} />
+          </div>
+        )}
       </Container>
     </nav>
   );
@@ -32,6 +51,11 @@ const styles = css`
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+  img {
+    width: 40px;
+    cursor: pointer;
+    border-radius: 50%;
   }
   @media (max-width: 1000px) {
     background: rgba(35, 45, 57, 0.8);
