@@ -23,7 +23,7 @@ function UserMenu({ show }) {
   }
   return (
     <dialog open={show} css={style}>
-      <Link to="/acoount-info">Profile</Link>
+      <Link to="/profile">Profile</Link>
       <Link to="/transactions">Transactions</Link>
       <Button variant="contained" onClick={handleLogout}>
         Log Out

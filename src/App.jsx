@@ -3,7 +3,6 @@ import "./App.css";
 import Landing from "./pages/Landing";
 import Root from "./pages/Root";
 import Auth from "./pages/Auth";
-import EditProfile from "./pages/EditProfile";
 import {
   createBrowserRouter,
   Route,
@@ -12,6 +11,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import ProtectedRoutes from "./pages/ProtectedRoutes";
+import Profile from "./pages/Profile";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -19,7 +19,7 @@ const router = createBrowserRouter(
       <Route index element={<Landing />} />
       <Route path="auth" element={<Auth />} />
       <Route element={<ProtectedRoutes />}>
-        <Route path="/edit-profile" element={<EditProfile />} />
+        <Route path="/profile" element={<Profile />} />
       </Route>
     </Route>
   )

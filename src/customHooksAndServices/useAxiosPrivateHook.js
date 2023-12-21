@@ -4,47 +4,48 @@ import { useEffect } from "react";
 import useRefreshToken from "./refreshTokenHook";
 
 export const useAxiosPrivateServiceWithInterceptors = () => {
-	const { user, setUser } = useAuth();
-	const token = user.accessToken;
-	const { refreshToken } = useRefreshToken();
-	useEffect(() => {
-		const reqInt = axiosPrivateService.interceptors.request.use(
-			(config) => {
-				if (token) {
-					config.headers["Authorization"] = `Bearer ${token}`;
-				}
-				return config;
-			},
-			(error) => {
-				return Promise.reject(error);
-			}
-		);
+  const { user, setUser } = useAuth();
+  const token = user.accessToken;
+  const { refreshToken } = useRefreshToken();
+  useEffect(() => {
+    console.log(token);
+    const reqInt = axiosPrivateService.interceptors.request.use(
+      (config) => {
+        if (token) {
+          config.headers["Authorization"] = `Bearer ${token}`;
+        }
+        return config;
+      },
+      (error) => {
+        return Promise.reject(error);
+      }
+    );
 
-		const resInt = axiosPrivateService.interceptors.response.use(
-			(response) => {
-				return response;
-			},
-			async (error) => {
-				if (error.response.status === 401 || error.response.status === 403) {
-					const prevRequest = error.config;
-					if (!prevRequest._retry) {
-						prevRequest._retry = true;
-						const userObj = await refreshToken();
-						setUser(userObj);
-						prevRequest.headers[
-							"Authorization"
-						] = `Bearer ${userObj.accessToken}`;
-						return axiosPrivateService(prevRequest);
-					}
-				}
-				return Promise.reject(error);
-			}
-		);
-		return () => {
-			axiosPrivateService.interceptors.request.eject(reqInt);
-			axiosPrivateService.interceptors.response.eject(resInt);
-		};
-	});
+    const resInt = axiosPrivateService.interceptors.response.use(
+      (response) => {
+        return response;
+      },
+      async (error) => {
+        if (error.response.status === 401 || error.response.status === 403) {
+          const prevRequest = error.config;
+          if (!prevRequest._retry) {
+            prevRequest._retry = true;
+            const userObj = await refreshToken();
+            setUser(userObj);
+            prevRequest.headers[
+              "Authorization"
+            ] = `Bearer ${userObj.accessToken}`;
+            return axiosPrivateService(prevRequest);
+          }
+        }
+        return Promise.reject(error);
+      }
+    );
+    return () => {
+      axiosPrivateService.interceptors.request.eject(reqInt);
+      axiosPrivateService.interceptors.response.eject(resInt);
+    };
+  });
 
-	return axiosPrivateService;
+  return axiosPrivateService;
 };
