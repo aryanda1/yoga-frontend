@@ -1,8 +1,16 @@
 import { css } from "@emotion/react";
 import { Button } from "@mui/material";
+import {
+  RadioGroup,
+  FormControl,
+  FormLabel,
+  Grid,
+  Radio,
+  FormControlLabel,
+} from "@mui/material";
 import { useState } from "react";
-function UserProfileItem({ title, desc, hideBtn, name, updateHandler }) {
-  console.log(updateHandler, name);
+function UserProfileItem({ title, desc, hideBtn, name, updateHandler, val }) {
+  // console.log(name, val);
   const [showForm, setShowForm] = useState(false);
   function formToggler() {
     setShowForm((prev) => !prev);
@@ -17,7 +25,7 @@ function UserProfileItem({ title, desc, hideBtn, name, updateHandler }) {
       <div className="description">
         {showForm ? (
           <EditForm
-            value={desc}
+            value={name === "nextBatch" ? val : desc}
             cancelBtnHandler={formToggler}
             name={name}
             handleUpdate={updateHandler}
@@ -49,12 +57,95 @@ function EditForm({ value, cancelBtnHandler, name, handleUpdate }) {
   }
   return (
     <div css={styles2}>
-      <input
-        type="text"
-        value={defaultValue}
-        onChange={(e) => updateValue(e.target.value)}
-        autoFocus
-      />
+      {name == "nextBatch" ? (
+        <FormControl
+          sx={{
+            display: "grid",
+            justifyItems: "center",
+          }}
+        >
+          <FormLabel
+            id="demo-form-control-label-placement"
+            sx={{
+              justifySelf: "start",
+              // color: "#ed563b",
+              // "&.Mui-disabled": { color: "#ed563b" },
+              // "&.Mui-focused": { color: "ed563b" },
+            }}
+            disabled={true}
+          >
+            Select Batch Timing
+          </FormLabel>
+          <RadioGroup
+            row
+            aria-labelledby="demo-form-control-label-placement"
+            name="batch"
+            defaultValue="top"
+          >
+            <Grid container spacing={0.5}>
+              <Grid item xs={6}>
+                <FormControlLabel
+                  value="1"
+                  control={
+                    <Radio
+                      onChange={(e) => updateValue(e.target.value)}
+                      color="secondary"
+                    />
+                  }
+                  checked={defaultValue === "1"}
+                  label="6-7AM"
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <FormControlLabel
+                  value="2"
+                  control={
+                    <Radio
+                      onChange={(e) => updateValue(e.target.value)}
+                      color="secondary"
+                    />
+                  }
+                  checked={defaultValue === "2"}
+                  label="7-8AM"
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <FormControlLabel
+                  value="3"
+                  control={
+                    <Radio
+                      onChange={(e) => updateValue(e.target.value)}
+                      color="secondary"
+                    />
+                  }
+                  checked={defaultValue === "3"}
+                  label="8-9AM"
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <FormControlLabel
+                  value="4"
+                  control={
+                    <Radio
+                      onChange={(e) => updateValue(e.target.value)}
+                      color="secondary"
+                    />
+                  }
+                  checked={defaultValue === "4"}
+                  label="5-6PM"
+                />
+              </Grid>
+            </Grid>
+          </RadioGroup>
+        </FormControl>
+      ) : (
+        <input
+          type="text"
+          value={defaultValue}
+          onChange={(e) => updateValue(e.target.value)}
+          autoFocus
+        />
+      )}
       <div className="action">
         <Button
           variant="contained"
@@ -75,9 +166,11 @@ function EditForm({ value, cancelBtnHandler, name, handleUpdate }) {
 const styles = css`
   &.active {
     background: #fafafa;
+    align-items: unset;
   }
   position: relative;
   display: flex;
+  align-items: center;
   gap: 20px;
   padding: 12px;
   border-bottom: 1px solid #eee;
@@ -95,8 +188,12 @@ const styles = css`
     flex: 1 1 20%;
     text-align: right;
   }
-  @media (max-width: 768px) {
+  @media (max-width: 800px) {
     flex-direction: column;
+    align-items: baseline;
+    .description {
+      width: 100%;
+    }
     .right-wrapper {
       position: absolute;
       right: 0;
@@ -105,7 +202,7 @@ const styles = css`
 `;
 
 const styles2 = css`
-  input {
+  input:not[type='radio] {
     border: 1px solid #ccc;
     border-radius: 4px;
     padding: 4px 10px;

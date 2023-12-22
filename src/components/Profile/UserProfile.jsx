@@ -8,7 +8,7 @@ function UserProfile() {
   const { editProfileInfo } = useEditProfile();
   const batches = [
     "06:00AM-07:00AM",
-    "07:00AM-08AM",
+    "07:00AM-08:00AM",
     "08:00AM-09:00AM",
     "05:00PM-06:00PM",
   ];
@@ -24,7 +24,6 @@ function UserProfile() {
       window.alert(response.response.data.message);
     }
   };
-  console.log(handleUpdate);
 
   return (
     <div css={styles}>
@@ -53,13 +52,20 @@ function UserProfile() {
             updateHandler={handleUpdate}
           />
           <UserPofileItem title="Age" desc={user.age} hideBtn />
-          <UserPofileItem title="Batch" desc={batches[user.batch]} hideBtn />
+          <UserPofileItem
+            title="Batch"
+            desc={batches[user.batch - 1]}
+            hideBtn
+          />
           <UserPofileItem
             title="Next Batch"
             name="nextBatch"
+            val={String(user.nextBatch || user.batch)}
             updateHandler={handleUpdate}
             desc={
-              user.nextBatch ? batches[user.nextBatch] : batches[user.batch]
+              user.nextBatch
+                ? batches[user.nextBatch - 1]
+                : batches[user.batch - 1]
             }
           />
         </section>
