@@ -25,7 +25,7 @@ const Form = ({ text }) => {
     message: "",
   });
   const inputChangeHandler = (e) => {
-    console.log(e.target.name, e.target.value, errorState);
+    // console.log(e.target.name, e.target.value, errorState);
     switch (e.target.name) {
       case "name":
         dispatchError({ type: "resetNameError" });
@@ -73,7 +73,7 @@ const Form = ({ text }) => {
   const handleSubmit = async (e) => {
     setRequestInProgress(true);
     e.preventDefault();
-    console.log(input);
+    // console.log(input);
     if (
       errorState.contactName ||
       errorState.contactEmail ||

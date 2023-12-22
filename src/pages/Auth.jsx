@@ -160,7 +160,6 @@ function Auth() {
       return;
     }
     const { username, password } = input;
-    console.log(username, password);
     if (!username || !password) {
       return;
     }
@@ -188,7 +187,6 @@ function Auth() {
       return;
     }
     let { firstName, lastName, username, email, password, age, batch } = input;
-    console.log(input);
     if (
       firstName === "" ||
       lastName === "" ||

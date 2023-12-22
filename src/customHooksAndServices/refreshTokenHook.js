@@ -9,9 +9,7 @@ const useRefreshToken = () => {
       withCredentials: true,
     })
       .then((data) => {
-        console.log(data.data.user);
         setUser(data.data.user);
-        console.log(user);
         return data.data.user;
       })
       .catch((err) => {

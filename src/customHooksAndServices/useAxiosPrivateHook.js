@@ -8,7 +8,6 @@ export const useAxiosPrivateServiceWithInterceptors = () => {
   const token = user.accessToken;
   const { refreshToken } = useRefreshToken();
   useEffect(() => {
-    console.log(token);
     const reqInt = axiosPrivateService.interceptors.request.use(
       (config) => {
         if (token) {
