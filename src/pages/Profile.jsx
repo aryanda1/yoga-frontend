@@ -1,5 +1,5 @@
 import Header from "../components/Profile/Header";
-import UserProfile from "../components/Profile/USerProfile";
+import UserProfile from "../components/Profile/UserProfile";
 function Profile() {
   return (
     <div>
