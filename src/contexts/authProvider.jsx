@@ -11,6 +11,7 @@ export const AuthContext = createContext({
     batch: "",
     payments: [],
     joiningDate: "",
+    nextBatch: "",
   },
   setUser: () => {},
 });
@@ -27,6 +28,7 @@ export const AuthProvider = (props) => {
     batch: "",
     payments: [],
     joiningDate: "",
+    nextBatch: "",
   });
 
   return (
