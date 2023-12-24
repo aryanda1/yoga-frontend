@@ -3,6 +3,7 @@ import useAuth from "../customHooksAndServices/authContextHook";
 import { jwtDecode } from "jwt-decode";
 import useRefreshToken from "../customHooksAndServices/refreshTokenHook";
 import { useEffect, useState } from "react";
+import Overlay from "../components/Main/Overlay";
 
 export default function ProtectedRoutes() {
   const { user } = useAuth();
@@ -30,5 +31,5 @@ export default function ProtectedRoutes() {
     }
   }, [decodedToken, currentTime, refreshToken, navigateTo, location]);
 
-  return loading ? <p>Loading...</p> : <Outlet />;
+  return loading ? <Overlay text="Loading..." /> : <Outlet />;
 }

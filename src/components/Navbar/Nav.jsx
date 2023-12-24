@@ -21,11 +21,7 @@ const Nav = () => {
           menuClickHandler={() => setHidden(!hidden)}
           closed={hidden}
         ></Hamburger>
-        <LinksContainer
-          hidden={hidden}
-          onClick={() => setHidden(!hidden)}
-          isLoggedIn={isLoggedIn}
-        />
+        <LinksContainer hidden={hidden} isLoggedIn={isLoggedIn} />
         {isLoggedIn && (
           <div
             style={{ position: "relative", marginLeft: "2rem" }}
