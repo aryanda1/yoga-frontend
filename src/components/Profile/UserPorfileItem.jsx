@@ -1,5 +1,6 @@
 import { css } from "@emotion/react";
 import { Button } from "@mui/material";
+
 import {
   RadioGroup,
   FormControl,
@@ -8,7 +9,7 @@ import {
   Radio,
   FormControlLabel,
 } from "@mui/material";
-import { useState } from "react";
+import { useState, useRef } from "react";
 function UserProfileItem({ title, desc, hideBtn, name, updateHandler, val }) {
   // console.log(name, val);
   const [showForm, setShowForm] = useState(false);
@@ -49,11 +50,62 @@ function UserProfileItem({ title, desc, hideBtn, name, updateHandler, val }) {
   );
 }
 
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+const EMAIL_REGEX = /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,4}$/;
+const NAME_REGEX = /^[A-Z]+$/i;
+
 function EditForm({ value, cancelBtnHandler, name, handleUpdate }) {
-  const [defaultValue, updateValue] = useState(value);
+  const [curValue, updateValue] = useState(value);
+  const [requestInProgress, setRequestInProgress] = useState(false);
+  const [helperText, setHelperText] = useState("");
+  const inputRef = useRef(null);
+  function focus() {
+    if (inputRef.current) inputRef.current.focus();
+  }
   async function saveBtnHandler() {
-    await handleUpdate(name, defaultValue);
+    if (curValue === value) {
+      setHelperText("No changes made");
+      focus();
+      return;
+    }
+    if (curValue === "") {
+      focus();
+      setHelperText("Field cant be empty!");
+      return;
+    }
+    if (
+      (name == "firstName" || name == "lastName") &&
+      !NAME_REGEX.test(curValue)
+    ) {
+      focus();
+      setHelperText("Only alphabets allowed!");
+      return;
+    }
+    if ((name == "firstName" || name == "lastName") && curValue.length < 3) {
+      focus();
+      setHelperText("Field must be atleast 3 characters long!");
+      return;
+    }
+    if (name == "email" && !EMAIL_REGEX.test(curValue)) {
+      focus();
+      setHelperText("Invalid email!");
+      return;
+    }
+    if (name == "password" && !PWD_REGEX.test(curValue)) {
+      focus();
+      setHelperText(
+        "Password must contain atleast one uppercase letter, one lowercase letter, one number and one special character!"
+      );
+      return;
+    }
+    setRequestInProgress(true);
+    await handleUpdate(name, curValue);
+    setRequestInProgress(false);
     cancelBtnHandler();
+  }
+  function changeHandler(e) {
+    setHelperText("");
+    updateValue(e.target.value);
   }
   return (
     <div css={styles2}>
@@ -86,52 +138,32 @@ function EditForm({ value, cancelBtnHandler, name, handleUpdate }) {
               <Grid item xs={6}>
                 <FormControlLabel
                   value="1"
-                  control={
-                    <Radio
-                      onChange={(e) => updateValue(e.target.value)}
-                      color="secondary"
-                    />
-                  }
-                  checked={defaultValue === "1"}
+                  control={<Radio onChange={changeHandler} color="secondary" />}
+                  checked={curValue === "1"}
                   label="6-7AM"
                 />
               </Grid>
               <Grid item xs={6}>
                 <FormControlLabel
                   value="2"
-                  control={
-                    <Radio
-                      onChange={(e) => updateValue(e.target.value)}
-                      color="secondary"
-                    />
-                  }
-                  checked={defaultValue === "2"}
+                  control={<Radio onChange={changeHandler} color="secondary" />}
+                  checked={curValue === "2"}
                   label="7-8AM"
                 />
               </Grid>
               <Grid item xs={6}>
                 <FormControlLabel
                   value="3"
-                  control={
-                    <Radio
-                      onChange={(e) => updateValue(e.target.value)}
-                      color="secondary"
-                    />
-                  }
-                  checked={defaultValue === "3"}
+                  control={<Radio onChange={changeHandler} color="secondary" />}
+                  checked={curValue === "3"}
                   label="8-9AM"
                 />
               </Grid>
               <Grid item xs={6}>
                 <FormControlLabel
                   value="4"
-                  control={
-                    <Radio
-                      onChange={(e) => updateValue(e.target.value)}
-                      color="secondary"
-                    />
-                  }
-                  checked={defaultValue === "4"}
+                  control={<Radio onChange={changeHandler} color="secondary" />}
+                  checked={curValue === "4"}
                   label="5-6PM"
                 />
               </Grid>
@@ -141,17 +173,28 @@ function EditForm({ value, cancelBtnHandler, name, handleUpdate }) {
       ) : (
         <input
           type="text"
-          value={defaultValue}
+          value={curValue}
           onChange={(e) => updateValue(e.target.value)}
+          onBlur={() => setHelperText("")}
           autoFocus
+          ref={inputRef}
         />
       )}
+      <div style={{ color: "red", marginBottom: "5px" }}>{helperText}</div>
       <div className="action">
         <Button
           variant="contained"
-          sx={{ padding: "3px 0", mr: 1 }}
+          sx={{
+            padding: "3px 0",
+            mr: 1,
+            "&.Mui-disabled": {
+              pointerEvents: "visible",
+              cursor: "not-allowed",
+            },
+          }}
           css={btnStyleContained}
           onClick={saveBtnHandler}
+          disabled={requestInProgress}
         >
           Save
         </Button>
