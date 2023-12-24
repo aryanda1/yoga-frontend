@@ -20,6 +20,7 @@ import { initialErrorState, errorReducer } from "../state/AuthReducer";
 import useLogin from "../customHooksAndServices/loginHook";
 import useRegister from "../customHooksAndServices/registrationHook";
 import useAuth from "../customHooksAndServices/authContextHook";
+import ProfilePicture from "../components/Profile/ProfilePicture";
 const INT_REGEX = /^\d*$/;
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
@@ -38,6 +39,7 @@ function Auth() {
   const { login } = useLogin();
   const { register } = useRegister();
   const { setUser } = useAuth();
+  const [formData, setFormData] = useState(new FormData());
   const [input, setInput] = useState({
     email: "",
     username: "",
@@ -202,16 +204,10 @@ function Auth() {
     if (age < 18 || age > 65) return;
     batch = parseInt(batch);
     setRequestInProgress(true);
-    const data = await register({
-      firstName,
-      lastName,
-      username,
-      email,
-      password,
-      age,
-      batch,
-    });
+    Object.keys(input).forEach((key) => formData.set(key, input[key]));
 
+    console.log(formData);
+    const data = await register(formData);
     setRequestInProgress(false);
     if (data.status === 201) {
       setUser(data.data.user);
@@ -232,6 +228,14 @@ function Auth() {
             <>
               {" "}
               <div>
+                <div className="avator" css={styles3}>
+                  <ProfilePicture
+                    imgChangeHandler={(fd) => {
+                      setFormData(fd);
+                      return "success";
+                    }}
+                  />
+                </div>
                 <FormLabel>Personal Information</FormLabel>
                 <div css={styles2}>
                   <TextField
@@ -476,6 +480,18 @@ const styles2 = css`
   gap: 1rem;
   @media (max-width: 1000px) {
     grid-template-columns: repeat(1, 1fr);
+  }
+`;
+
+const styles3 = css`
+  width: 200px;
+  height: 200px;
+  margin-inline: auto;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  .img-wrap {
+    border: 10px solid rgba(0, 0, 0, 0.55);
+    border-radius: 50% !important;
   }
 `;
 export default Auth;

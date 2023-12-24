@@ -4,9 +4,9 @@ const register = async (credentials) => {
   return axiosService("/api/user/register", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "multipart/form-data",
     },
-    data: JSON.stringify(credentials),
+    data: credentials,
   })
     .then((data) => {
       return data;
