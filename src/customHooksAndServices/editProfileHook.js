@@ -3,8 +3,8 @@ import { useAxiosPrivateServiceWithInterceptors } from "./useAxiosPrivateHook";
 export default function useEditProfile() {
   const axiosPrivateService = useAxiosPrivateServiceWithInterceptors();
 
-  const editProfileInfo = async ({ editProperty, editValue }) => {
-    return axiosPrivateService("/api/editprofile", {
+  const editProfileInfo = async ({ editProperty, editValue, isFormData }) => {
+    const options = {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -13,7 +13,13 @@ export default function useEditProfile() {
         editProperty,
         editValue,
       }),
-    })
+    };
+    if (isFormData) {
+      options.headers["Content-Type"] = "multipart/form-data";
+      options.data = editValue;
+    }
+    console.log(options.headers);
+    return axiosPrivateService("/api/editprofile", options)
       .then((data) => {
         return data;
       })

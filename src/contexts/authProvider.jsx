@@ -12,6 +12,7 @@ export const AuthContext = createContext({
     payments: [],
     joiningDate: "",
     nextBatch: "",
+    imageUrl: "",
   },
   setUser: () => {},
 });
@@ -29,6 +30,7 @@ export const AuthProvider = (props) => {
     payments: [],
     joiningDate: "",
     nextBatch: "",
+    imageUrl: "",
   });
 
   return (

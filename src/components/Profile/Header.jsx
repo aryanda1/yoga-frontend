@@ -1,19 +1,59 @@
 import { css } from "@emotion/react";
 import { Typography } from "@mui/material";
 import useAuth from "../../customHooksAndServices/authContextHook";
+import useEditProfile from "../../customHooksAndServices/editProfileHook";
+import ProfilePicture from "./ProfilePicture";
 
+const options = {
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+};
+const formatter = new Intl.DateTimeFormat("local", options);
 function Header() {
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
+  const { editProfileInfo } = useEditProfile();
+  async function imgChangeHandler(formData) {
+    formData.append("editProperty", "imageUrl");
+    const response = await editProfileInfo({
+      editProperty: "",
+      editValue: formData,
+      isFormData: true,
+    });
+    if (response.status === 200) {
+      setUser((prev) => ({ ...prev, imageUrl: response.data.imageUrl }));
+      alert("Profile updated successfully!");
+      return "success";
+    } else {
+      console.log(response.response.data);
+      window.alert(response.response.data.message);
+    }
+  }
+
+  function dateFormatter(date) {
+    const formattedDate = formatter.format(new Date(date));
+    return formattedDate;
+  }
+
   return (
     <div css={styles}>
       <div className="background"></div>
       <div className="container">
         <div className="avatar">
-          <img src="https://i.pinimg.com/736x/7f/79/6d/7f796d57218d9cd81a92d9e6e8e51ce4--free-avatars-online-profile.jpg" />
+          {/* <img src="https://i.pinimg.com/736x/7f/79/6d/7f796d57218d9cd81a92d9e6e8e51ce4--free-avatars-online-profile.jpg" /> */}
+          <ProfilePicture
+            imageURL={user.imageUrl}
+            imgChangeHandler={imgChangeHandler}
+          />
         </div>
-        <Typography variant="h5" color="white" className="name">
-          {user.firstName + " " + user.lastName}
-        </Typography>
+        <div class="user--info">
+          <Typography variant="h5" color="white" className="name">
+            {user.firstName + " " + user.lastName}
+          </Typography>
+          <Typography variant="subtitle1" color="white">
+            {`Member from ${dateFormatter(user.joiningDate)}`}
+          </Typography>
+        </div>
       </div>
     </div>
   );
@@ -42,8 +82,6 @@ const styles = css`
       cursor: pointer;
       height: 140px;
       width: 140px;
-      border: 5px solid white;
-      border-radius: 15px;
     }
   }
   @media (max-width: 1000px) {
@@ -62,6 +100,9 @@ const styles = css`
       }
       .name {
         margin-top: 1.2rem;
+      }
+      .user--info {
+        text-align: center;
       }
     }
   }
