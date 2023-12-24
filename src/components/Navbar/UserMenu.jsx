@@ -82,6 +82,7 @@ const style = css`
     border-bottom: 2px solid rgba(255, 255, 255, 0.6);
     padding-bottom: 8px;
     color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
     &:hover {
       color: white;
     }

@@ -31,7 +31,7 @@ const Nav = () => {
             style={{ position: "relative", marginLeft: "2rem" }}
             onClick={() => setShowUserMenu(!showUserMenu)}
           >
-            <img src="https://i.pinimg.com/736x/7f/79/6d/7f796d57218d9cd81a92d9e6e8e51ce4--free-avatars-online-profile.jpg" />
+            <img src={user.imageUrl} />
             <UserMenu show={showUserMenu} />
           </div>
         )}
@@ -54,6 +54,8 @@ const styles = css`
   }
   img {
     width: 40px;
+    object-fit: cover;
+    height: 40px;
     cursor: pointer;
     border-radius: 50%;
   }
