@@ -46,7 +46,7 @@ function Header() {
             imgChangeHandler={imgChangeHandler}
           />
         </div>
-        <div class="user--info">
+        <div className="user--info">
           <Typography variant="h5" color="white" className="name">
             {user.firstName + " " + user.lastName}
           </Typography>

@@ -1,11 +1,15 @@
 import { css } from "@emotion/react";
-import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import React from "react";
 
-const Linkk = ({ name, linkTo, onClick }) => {
+const Linkk = ({ name, linkTo, onClick, isHome }) => {
   return (
-    <HashLink css={styles} to={linkTo} onClick={onClick}>
+    <HashLink
+      css={styles}
+      to={linkTo}
+      onClick={onClick}
+      className={isHome && "selected"}
+    >
       {name}
     </HashLink>
   );
@@ -18,7 +22,7 @@ const styles = css`
   font-weight: 400;
   color: #fff;
   transition: color 600ms ease-in-out;
-  &:first-of-type,
+  &.selected,
   &:hover {
     color: #ed563b;
   }

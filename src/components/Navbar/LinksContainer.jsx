@@ -1,14 +1,21 @@
 import { css } from "@emotion/react";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Linkk from "./Link";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { btnStyles } from "../GlobalComponents/Button";
 
 const LinksContainer = ({ hidden, onClick, isLoggedIn }) => {
+  const location = useLocation();
+  const path = location.pathname;
   return (
     <div css={styles} className={(hidden ? "hidden" : "") + " linksContainer"}>
-      <Linkk name="HOME" linkTo="/#home" onClick={onClick} />
+      <Linkk
+        name="HOME"
+        linkTo="/#home"
+        onClick={onClick}
+        isHome={path === "/"}
+      />
       <Linkk name="ABOUT" linkTo="/#trainers" onClick={onClick} />
       <Linkk name="CLASSES" linkTo="/#ourClasses" onClick={onClick} />
       <Linkk name="SCHEDULES" linkTo="/#schedule" onClick={onClick} />
