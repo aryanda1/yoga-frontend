@@ -13,8 +13,8 @@ const Linkk = ({ name, linkTo, isHome }) => {
 const styles = css`
   text-decoration: none;
   display: inline-block;
-  font-size: 13px;
-  font-weight: 400;
+  font-size: 15px;
+  font-weight: 500;
   color: #fff;
   transition: color 600ms ease-in-out;
   &.selected,

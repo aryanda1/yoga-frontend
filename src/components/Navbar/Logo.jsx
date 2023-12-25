@@ -13,7 +13,7 @@ const Logo = () => (
 
 const styles = css`
   color: #fff;
-  font-size: 30px;
+  font-size: 29px;
   font-weight: 900;
   line-height: 1;
   cursor: pointer;

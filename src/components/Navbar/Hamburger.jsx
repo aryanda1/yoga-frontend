@@ -75,6 +75,9 @@ const styles = css`
   @media (max-width: 1000px) {
     display: block;
   }
+  @media (max-width: 500px) {
+    margin-left: 0;
+  }
 
   @keyframes line-middle {
     0% {

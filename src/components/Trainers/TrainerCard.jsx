@@ -24,6 +24,7 @@ const styles = css`
   img {
     width: auto;
     height: 260px;
+    max-width: 100%; //fixed overflow in android overflow imgae width
     object-fit: cover;
   }
   h5 {
@@ -46,6 +47,7 @@ const styles = css`
   @media (max-width: 830px) {
     max-width: 540px;
     margin: 14px 0;
+    text-align: center;
   }
   @media (min-width: 831px) and (max-width: 1226px) {
     max-width: 47%;

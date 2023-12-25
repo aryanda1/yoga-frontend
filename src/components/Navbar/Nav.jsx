@@ -1,18 +1,23 @@
 import { css } from "@emotion/react";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Logo from "./Logo";
 import LinksContainer from "./LinksContainer";
 import Container from "../GlobalComponents/Container";
 import Hamburger from "./Hamburger";
 import UserMenu from "./UserMenu";
 import useAuth from "../../customHooksAndServices/authContextHook";
+import useRefreshToken from "../../customHooksAndServices/refreshTokenHook";
 
 const Nav = () => {
   const [hidden, setHidden] = useState(true);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const { user } = useAuth();
   const isLoggedIn = user.accessToken !== "";
+  const { refreshToken } = useRefreshToken();
+  useEffect(() => {
+    refreshToken();
+  }, []);
   return (
     <nav css={styles}>
       <Container>
@@ -24,7 +29,7 @@ const Nav = () => {
         <LinksContainer hidden={hidden} isLoggedIn={isLoggedIn} />
         {isLoggedIn && (
           <div
-            style={{ position: "relative", marginLeft: "2rem" }}
+            className="user--profile"
             onClick={() => setShowUserMenu(!showUserMenu)}
           >
             <img src={user.imageUrl} />
@@ -48,17 +53,26 @@ const styles = css`
     align-items: center;
     justify-content: space-between;
   }
-  img {
-    width: 40px;
-    object-fit: cover;
-    height: 40px;
-    cursor: pointer;
-    border-radius: 50%;
+  .user--profile {
+    position: relative;
+    margin-left: 2rem;
+    img {
+      width: 40px;
+      object-fit: cover;
+      height: 40px;
+      cursor: pointer;
+      border-radius: 50%;
+    }
   }
   @media (max-width: 1000px) {
     background: rgba(35, 45, 57, 0.8);
     .container {
       flex-wrap: wrap;
+    }
+  }
+  @media (max-width: 500px) {
+    .user--profile {
+      margin-left: 0;
     }
   }
 `;
