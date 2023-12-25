@@ -2,7 +2,7 @@ import { css } from "@emotion/core";
 
 const Output = ({ title, info, img }) => (
   <div css={styles} className="output">
-    <img src={img} alt="class" />
+    <img src={img} alt="class" loading="lazy" />
     <h2>{title}</h2>
     <p>{info}</p>
   </div>

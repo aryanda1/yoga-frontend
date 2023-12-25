@@ -429,7 +429,11 @@ function Auth() {
             </Typography>
             <Link
               to={`/auth?mode=${isLogin ? "signup" : "login"}`}
-              style={{ display: "inline-block" }}
+              style={{
+                display: "inline-block",
+                color: "blue",
+                textDecoration: "underline",
+              }}
             >
               {isLogin ? "Signup" : "SignIn"}
             </Link>

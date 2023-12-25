@@ -37,7 +37,7 @@ function ProfilePicture({
       />
       <label htmlFor="photo-upload" css={styles} className="custom-file-upload">
         <div className="img-wrap img-upload">
-          <img src={preview} />
+          <img src={preview} loading="lazy" />
         </div>
         <input
           id="photo-upload"

@@ -5,7 +5,7 @@ import Socials from "./Socials";
 
 const TrainerCard = ({ title, name, desc, img }) => (
   <div css={styles} className="card">
-    <img src={img} alt="trainer" />
+    <img src={img} alt="trainer" loading="lazy" />
     <h5>{title}</h5>
     <h3>{name}</h3>
     <p>{desc}</p>
