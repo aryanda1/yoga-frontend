@@ -12,10 +12,11 @@ import {
 } from "react-router-dom";
 import ProtectedRoutes from "./pages/ProtectedRoutes";
 import Profile from "./pages/Profile";
+import Error404 from "./pages/Error404";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<Root />}>
+    <Route path="/" element={<Root />} errorElement={<Error404 />}>
       <Route index element={<Landing />} />
       <Route path="auth" element={<Auth />} />
       <Route element={<ProtectedRoutes />}>
