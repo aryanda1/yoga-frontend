@@ -16,7 +16,7 @@ const styles = css`
   font-size: 15px;
   font-weight: 500;
   color: #fff;
-  transition: color 600ms ease-in-out;
+  transition: color 200ms ease-in-out;
   &.selected,
   &:hover {
     color: #ed563b;

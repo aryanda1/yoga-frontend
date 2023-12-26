@@ -32,7 +32,12 @@ function Header() {
 
   function dateFormatter(date) {
     const formattedDate = formatter.format(new Date(date));
-    return formattedDate;
+    if (formattedDate.includes(",")) return formattedDate;
+
+    const split = formattedDate.split(" ");
+    split[1] += ",";
+    // formattedDate.split(' ')[]
+    return split.join(" ");
   }
 
   return (
@@ -47,11 +52,21 @@ function Header() {
           />
         </div>
         <div className="user--info">
-          <Typography variant="h5" color="white" className="name">
+          <Typography
+            variant="h5"
+            color="white"
+            className="name"
+            fontSize="2rem"
+          >
             {user.firstName + " " + user.lastName}
           </Typography>
-          <Typography variant="subtitle1" color="white">
-            {`Member from ${dateFormatter(user.joiningDate)}`}
+          <Typography
+            color="#ccc"
+            fontSize="14px"
+            mt="3px"
+          >{`ID: ${user.username}`}</Typography>
+          <Typography variant="subtitle1" color="#ccc" fontStyle="14px">
+            {`Member from: ${dateFormatter(user.joiningDate)}`}
           </Typography>
         </div>
       </div>
@@ -61,11 +76,10 @@ function Header() {
 
 const styles = css`
   .background {
-    // background-color: black;
     background: rgba(35, 45, 57, 0.8);
     position: absolute;
     z-index: -1;
-    height: 387px;
+    height: 420px;
     width: 100%;
   }
   .container {
@@ -98,10 +112,9 @@ const styles = css`
           height: 120px;
         }
       }
-      .name {
-        margin-top: 1.2rem;
-      }
+
       .user--info {
+        margin-bottom: 1.2rem;
         text-align: center;
       }
     }

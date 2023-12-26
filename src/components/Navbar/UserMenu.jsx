@@ -35,7 +35,7 @@ function UserMenu({ show }) {
 const style = css`
   position: absolute;
   top: 50px;
-  left: -3rem;
+  left: 0;
   padding: 10px;
   background: border-box;
   color: white;
@@ -51,12 +51,12 @@ const style = css`
   }
   &[open] {
     opacity: 0.8;
-    transform: scaleY(1);
+    transform: translateX(calc(-50% + 9px)) scaleY(1); //centering the dialog with respect to profile image
   }
 
   /*   Closed state of the dialog   */
   opacity: 0;
-  transform: scaleY(0);
+  transform: translateX(calc(-50% + 9px)) scaleY(0);
   transition: opacity 0.3s ease-out, transform 0.3s ease-out,
     overlay 0.3s ease-out allow-discrete, display 0.3s ease-out allow-discrete;
   /* Equivalent to
@@ -68,7 +68,7 @@ const style = css`
   @starting-style {
     &[open] {
       opacity: 0;
-      transform: scaleY(0);
+      transform: translateX(calc(-50% + 9px)) scaleY(0);
     }
   }
 
