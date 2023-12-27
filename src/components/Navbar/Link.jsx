@@ -2,9 +2,14 @@ import { css } from "@emotion/react";
 import { HashLink } from "react-router-hash-link";
 import React from "react";
 
-const Linkk = ({ name, linkTo, isHome }) => {
+const Linkk = ({ name, linkTo, isHome, onClick }) => {
   return (
-    <HashLink css={styles} to={linkTo} className={isHome && "selected"}>
+    <HashLink
+      css={styles}
+      to={linkTo}
+      className={isHome && "selected"}
+      onClick={onClick}
+    >
       {name}
     </HashLink>
   );

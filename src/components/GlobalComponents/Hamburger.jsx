@@ -2,6 +2,7 @@ import { css } from "@emotion/react";
 import React, { useState } from "react";
 
 const Hamburger = ({ closed, menuClickHandler }) => {
+  //the closed and menuclick handler are used to toggle the hamburger state either three lines or cross
   const [remove, setRemove] = useState(false);
   const handleClick = () => {
     menuClickHandler();
@@ -9,22 +10,18 @@ const Hamburger = ({ closed, menuClickHandler }) => {
   };
 
   return (
-    <button id="hamburger" onClick={handleClick} css={styles}>
+    <button
+      id="hamburger"
+      onClick={handleClick}
+      css={styles}
+      className={`${!closed ? "menu-active" : ""}`}
+    >
+      <div className={`line line--first ${!remove ? "no-animate" : ""} `}></div>
       <div
-        className={`line line--first ${!remove ? "no-animate" : ""} ${
-          !closed ? "animate-forward" : ""
-        }`}
+        className={`line line--second ${!remove ? "no-animate" : ""}
+        `}
       ></div>
-      <div
-        className={`line line--second ${!remove ? "no-animate" : ""} ${
-          !closed ? "animate-forward" : ""
-        }`}
-      ></div>
-      <div
-        className={`line line--third ${!remove ? "no-animate" : ""} ${
-          !closed ? "animate-forward" : ""
-        }`}
-      ></div>
+      <div className={`line line--third ${!remove ? "no-animate" : ""}`}></div>
     </button>
   );
 };
@@ -47,36 +44,29 @@ const styles = css`
     animation: line-first-rev 0.5s ease-in-out forwards;
   }
 
-  .line--first.animate-forward {
-    animation: line-first 0.5s ease-in-out forwards;
-  }
-
   .line--second {
     margin-block: 0.3rem;
     animation: line-middle-rev 0.5s ease-in-out forwards;
-  }
-
-  .line--second.animate-forward {
-    animation: line-middle 0.5s ease-in-out forwards;
   }
 
   .line--third {
     animation: line-third-rev 0.5s ease-in-out forwards;
   }
 
-  .line--third.animate-forward {
-    animation: line-third 0.5s ease-in-out forwards;
+  &.menu-active {
+    .line--first {
+      animation: line-first 0.5s ease-in-out forwards;
+    }
+    .line--second {
+      animation: line-middle 0.5s ease-in-out forwards;
+    }
+    .line--third {
+      animation: line-third 0.5s ease-in-out forwards;
+    }
   }
 
   .no-animate {
     animation: none;
-  }
-
-  @media (max-width: 1000px) {
-    display: block;
-  }
-  @media (max-width: 500px) {
-    margin-left: 0;
   }
 
   @keyframes line-middle {

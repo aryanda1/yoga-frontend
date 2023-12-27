@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Logo from "./Logo";
 import LinksContainer from "./LinksContainer";
 import Container from "../GlobalComponents/Container";
-import Hamburger from "./Hamburger";
+import Hamburger from "../GlobalComponents/Hamburger";
 import UserMenu from "./UserMenu";
 import useAuth from "../../customHooksAndServices/authContextHook";
 import useRefreshToken from "../../customHooksAndServices/refreshTokenHook";
@@ -26,7 +26,11 @@ const Nav = () => {
           menuClickHandler={() => setHidden(!hidden)}
           closed={hidden}
         ></Hamburger>
-        <LinksContainer hidden={hidden} isLoggedIn={isLoggedIn} />
+        <LinksContainer
+          hidden={hidden}
+          isLoggedIn={isLoggedIn}
+          closeMenu={() => setHidden(!hidden)}
+        />
         {isLoggedIn && (
           <div
             className="user--profile"
@@ -64,17 +68,28 @@ const styles = css`
       border-radius: 50%;
     }
   }
+
   @media (max-width: 1000px) {
     background: rgba(35, 45, 57, 0.8);
     .container {
       flex-wrap: wrap;
+    }
+    button {
+      display: block;
     }
   }
   @media (max-width: 500px) {
     .user--profile {
       margin-left: 0;
     }
+    button {
+      margin-left: 0;
+    }
   }
+  @media (max-width: 400px) {
+    #hamburger{
+      margin-inline:auto 2rem;
+    }
 `;
 
 export default Nav;

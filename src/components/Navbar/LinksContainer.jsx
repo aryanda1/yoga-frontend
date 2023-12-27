@@ -5,18 +5,23 @@ import Linkk from "./Link";
 import { Link, useLocation } from "react-router-dom";
 import { btnStyles } from "../GlobalComponents/Button";
 
-const LinksContainer = ({ hidden, isLoggedIn }) => {
+const LinksContainer = ({ hidden, isLoggedIn, closeMenu }) => {
   const location = useLocation();
   const path = location.pathname;
   return (
     <div css={styles} className={(hidden ? "hidden" : "") + " linksContainer"}>
-      <Linkk name="HOME" linkTo="/#home" isHome={path === "/"} />
-      <Linkk name="ABOUT" linkTo="/#trainers" />
-      <Linkk name="CLASSES" linkTo="/#ourClasses" />
-      <Linkk name="SCHEDULES" linkTo="/#schedule" />
-      <Linkk name="CONTACT" linkTo="/#contact" />
+      <Linkk
+        name="HOME"
+        linkTo="/#home"
+        isHome={path === "/"}
+        onClick={closeMenu}
+      />
+      <Linkk name="ABOUT" linkTo="/#trainers" onClick={closeMenu} />
+      <Linkk name="CLASSES" linkTo="/#ourClasses" onClick={closeMenu} />
+      <Linkk name="SCHEDULES" linkTo="/#schedule" onClick={closeMenu} />
+      <Linkk name="CONTACT" linkTo="/#contact" onClick={closeMenu} />
       {!isLoggedIn && (
-        <Link to="/auth?mode=signup" css={btnStyles}>
+        <Link to="/auth?mode=signup" css={btnStyles} onClick={closeMenu}>
           GET STARTED
         </Link>
       )}
