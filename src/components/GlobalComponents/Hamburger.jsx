@@ -32,12 +32,15 @@ const styles = css`
   cursor: pointer;
   display: none;
   margin-left: auto;
+  gap: var(--gap);
+  flex-direction: column;
   .line {
-    width: 2rem;
-    height: 0.2rem;
+    width: 100%;
+    height: var(--height);
     background-color: white;
     box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
+    transition: background 0.5s ease-in-out;
   }
 
   .line--first {
@@ -45,7 +48,6 @@ const styles = css`
   }
 
   .line--second {
-    margin-block: 0.3rem;
     animation: line-middle-rev 0.5s ease-in-out forwards;
   }
 
@@ -98,19 +100,19 @@ const styles = css`
       transform: translate(0, 0) rotate(0deg);
     }
     50% {
-      transform: translate(0, 0.5rem);
+      transform: translate(0, calc(var(--height) + var(--gap)));
     }
     100% {
-      transform: translate(0, 0.5rem) rotate(45deg);
+      transform: translate(0, calc(var(--height) + var(--gap))) rotate(45deg);
     }
   }
 
   @keyframes line-first-rev {
     0% {
-      transform: translate(0, 0.5rem) rotate(45deg);
+      transform: translate(0, calc(var(--height) + var(--gap))) rotate(45deg);
     }
     50% {
-      transform: translate(0, 0.5rem);
+      transform: translate(0, calc(var(--height) + var(--gap)));
     }
     100% {
       transform: translate(0, 0) rotate(0deg);
@@ -121,19 +123,21 @@ const styles = css`
       transform: translate(0, 0) rotate(0deg);
     }
     50% {
-      transform: translate(0, -0.5rem);
+      transform: translate(0, calc((var(--height) + var(--gap)) * -1));
     }
     100% {
-      transform: translate(0, -0.5rem) rotate(-45deg);
+      transform: translate(0, calc((var(--height) + var(--gap)) * -1))
+        rotate(-45deg);
     }
   }
 
   @keyframes line-third-rev {
     0% {
-      transform: translate(0, -0.5rem) rotate(-45deg);
+      transform: translate(0, calc((var(--height) + var(--gap)) * -1))
+        rotate(-45deg);
     }
     50% {
-      transform: translate(0, -0.5rem);
+      transform: translate(0, calc((var(--height) + var(--gap)) * -1));
     }
     100% {
       transform: translate(0, 0) rotate(0deg);

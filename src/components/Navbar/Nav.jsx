@@ -57,6 +57,11 @@ const styles = css`
     align-items: center;
     justify-content: space-between;
   }
+  #hamburger{
+    width:2rem;
+    --gap:0.3rem;
+    --height:0.2rem;
+  }
   .user--profile {
     position: relative;
     margin-left: 2rem;
@@ -75,7 +80,7 @@ const styles = css`
       flex-wrap: wrap;
     }
     button {
-      display: block;
+      display: flex;
     }
   }
   @media (max-width: 500px) {
