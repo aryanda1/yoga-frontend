@@ -15,13 +15,14 @@ import ProtectedRoutes from "./pages/ProtectedRoutes";
 // import Profile from "./pages/Profile";
 import Error404 from "./pages/Error404";
 import Overlay from "./components/Main/Overlay";
-
+import PaymentForm from "./components/Transactions/PaymentForm";
+import TransactionHistory from "./components/Transactions/TransactionHistory";
 const ProfileLazy = lazy(() => import("./pages/Profile"));
 
 const LandingLazy = lazy(() => import("./pages/Landing"));
 
 const AuthLazy = lazy(() => import("./pages/Auth"));
-
+const TransactionsLazy = lazy(() => import("./pages/Transaction"));
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Root />} errorElement={<Error404 />}>
@@ -50,6 +51,17 @@ const router = createBrowserRouter(
             </Suspense>
           }
         />
+        <Route
+          path="/transactions"
+          element={
+            <Suspense fallback={<Overlay text="Loading..." />}>
+              <TransactionsLazy />
+            </Suspense>
+          }
+        >
+          <Route path="pay-now" element={<PaymentForm />} />
+          <Route path="pay-history" element={<TransactionHistory />} />
+        </Route>
       </Route>
     </Route>
   )
