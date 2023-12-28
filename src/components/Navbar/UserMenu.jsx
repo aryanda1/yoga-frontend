@@ -10,13 +10,17 @@ function UserMenu({ show }) {
   function handleLogout() {
     logout().then(() => {
       setUser({
-        username: "",
         accessToken: "",
+        username: "",
         firstName: "",
         lastName: "",
-        phoneNumber: "",
         email: "",
-        community: "",
+        age: "",
+        batch: "",
+        payments: [],
+        joiningDate: "",
+        nextBatch: "",
+        imageUrl: "",
       });
       navigate("/");
     });
@@ -24,7 +28,7 @@ function UserMenu({ show }) {
   return (
     <dialog open={show} css={style}>
       <Link to="/profile">Profile</Link>
-      <Link to="/transactions">Transactions</Link>
+      <Link to="/transactions/pay-history">Transactions</Link>
       <Button variant="contained" onClick={handleLogout}>
         Log Out
       </Button>
