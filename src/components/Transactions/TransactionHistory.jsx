@@ -1,33 +1,54 @@
 import { css } from "@emotion/react";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import TransactionRecord from "./TransactionRecord";
-import { useState } from "react";
-const trans = [
-  {
-    id: 1,
-    date: "12/9/2023",
-    paymentMonthYear: [
-      { month: 2, year: 2023 },
-      { month: 3, year: 2023 },
-    ],
-  },
-  { id: 2, date: "12/10/2023", paymentMonthYear: [{ month: 4, year: 2023 }] },
-  {
-    id: 3,
-    date: "12/11/2023",
-    paymentMonthYear: [
-      { month: 5, year: 2023 },
-      { month: 6, year: 2023 },
-    ],
-  },
-];
+import { useEffect, useState } from "react";
+import useAuth from "../../customHooksAndServices/authContextHook";
+
 export default function TransactionHistory() {
-  const [sort, setSort] = useState(true);
-  const [filter, setFilter] = useState(1);
+  const [sort, setSort] = useState(true); //true for sort in descending order, false for sort in ascending order
+
+  const [filter, setFilter] = useState(0);
+  const [filtered, setFiltered] = useState([]);
+  const [processed, setProcessed] = useState([]);
+
+  const { payments } = useAuth().user;
+
+  useEffect(() => {
+    setFiltered(payments.slice(0, 10));
+  }, []);
+  useEffect(() => {
+    if (sort) setProcessed(filtered);
+    else
+      setProcessed(
+        filtered.map((t, idx, array) => array[array.length - 1 - idx])
+      );
+  }, [filtered, sort]);
+
+  useEffect(() => {
+    if (filter === 0) {
+      setFiltered(payments.slice(0, 10));
+    } else if (filter === 1)
+      setFiltered(
+        payments.filter(
+          (t) => new Date(t.date).getFullYear() === new Date().getFullYear()
+        )
+      );
+    else if (filter === 2)
+      setFiltered(
+        payments.filter((t) => new Date(t.date).getFullYear() === 2022)
+      );
+    else if (filter === 3)
+      setFiltered(
+        payments.filter((t) => new Date(t.date).getFullYear() === 2021)
+      );
+  }, [filter]);
+  console.log(processed, filtered);
   function handleSortChange(event) {
+    if (event.target.value === "" || event.target.value === sort) return;
     setSort(event.target.value);
   }
   function handleFilterChange(event) {
+    if (event.target.value === "" || event.target.value === filter) return;
     setFilter(event.target.value);
   }
   return (
@@ -51,7 +72,7 @@ export default function TransactionHistory() {
           </Select>
           {/* <FormHelperText>With label + helper text</FormHelperText> */}
         </FormControl>
-        <FormControl sx={{ m: 1, minWidth: 120 }}>
+        <FormControl sx={{ m: 1, minWidth: 210 }}>
           <InputLabel id="filter-label" sx={{ color: "rgba(255,255,255,0.5)" }}>
             Filter
           </InputLabel>
@@ -63,6 +84,7 @@ export default function TransactionHistory() {
             onChange={handleFilterChange}
             sx={{ color: "rgba(255,255,255,0.8)" }}
           >
+            <MenuItem value={0}>Last 10 transactions</MenuItem>
             <MenuItem value={1}>This Year</MenuItem>
             <MenuItem value={2}>2022</MenuItem>
             <MenuItem value={3}>2021</MenuItem>
@@ -79,23 +101,21 @@ export default function TransactionHistory() {
             <div className="rTableCell">Amount (₹)</div>
           </div>
         </div>
-        {trans.length > 0 && (
+        {processed.length > 0 && (
           <div className="rTableBody">
-            {trans.map((tran) =>
-              tran.paymentMonthYear.map((pmy) => (
-                <TransactionRecord
-                  key={tran.id}
-                  id={tran.id}
-                  date={tran.date}
-                  month={pmy.month}
-                  year={pmy.year}
-                />
-              ))
-            )}
+            {processed.map((tran) => (
+              <TransactionRecord
+                key={Math.random().toString().substring(0, 10)}
+                id={tran.id}
+                date={tran.date}
+                month={tran.month}
+                year={tran.year}
+              />
+            ))}
           </div>
         )}
       </div>
-      {trans.length === 0 && (
+      {processed.length === 0 && (
         <p className="error-text">No Transactions Found!</p>
       )}
     </div>
@@ -106,6 +126,7 @@ const styles = css`
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 90%;
   .error-text {
     font-size: 1.2rem;
     font-weight: 500;
@@ -117,6 +138,7 @@ const styles = css`
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    margin-bottom: 1.5rem;
     & > * {
       fieldset {
         border-color: rgba(255, 255, 255, 0.5);
@@ -179,6 +201,15 @@ const styles = css`
     .rTableCell {
       display: block;
       border: none;
+    }
+  }
+  @media (max-width: 630px) {
+    .actions {
+      justify-content: center;
+      margin-bottom: 1rem;
+      & > * {
+        width: 80%;
+      }
     }
   }
 `;
