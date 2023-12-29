@@ -156,7 +156,7 @@ function Auth() {
   const handleLogin = async (e) => {
     setRequestInProgress(true);
     e.preventDefault();
-    console.log(input);
+    // console.log(input);
     if (errorState.username || errorState.password) {
       setRequestInProgress(false);
       return;
@@ -206,7 +206,7 @@ function Auth() {
     setRequestInProgress(true);
     Object.keys(input).forEach((key) => formData.set(key, input[key]));
 
-    console.log(formData);
+    // console.log(formData);
     const data = await register(formData);
     setRequestInProgress(false);
     if (data.status === 201) {

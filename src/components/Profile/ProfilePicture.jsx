@@ -16,7 +16,7 @@ function ProfilePicture({
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleImgChange = (e) => {
-    console.log(e.target.files[0]);
+    // console.log(e.target.files[0]);
     setFileProps({
       fileName: e.target.files[0].name,
       fileType: e.target.files[0].type,

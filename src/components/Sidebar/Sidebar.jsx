@@ -6,12 +6,9 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 function Sidebar({ showMenu, setShowMenu }) {
-  console.log(showMenu);
   const { logout } = useLogout();
   const navigate = useNavigate();
-  const { user, setUser } = useAuth();
-  const { username } = user;
-  const { pathname } = useLocation();
+  const { setUser } = useAuth();
 
   useEffect(() => {
     if (showMenu) {

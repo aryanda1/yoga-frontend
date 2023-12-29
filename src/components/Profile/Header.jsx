@@ -25,7 +25,7 @@ function Header() {
       alert("Profile updated successfully!");
       return "success";
     } else {
-      console.log(response.response.data);
+      // console.log(response.response.data);
       window.alert(response.response.data.message);
     }
   }

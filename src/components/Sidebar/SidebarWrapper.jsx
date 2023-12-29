@@ -5,7 +5,7 @@ import { css } from "@emotion/react";
 import { Outlet } from "react-router-dom";
 
 export default function SideMenuWrapper() {
-  const [showMenu, setShowMenu] = useState(false);
+  const [showMenu, setShowMenu] = useState(true);
 
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);

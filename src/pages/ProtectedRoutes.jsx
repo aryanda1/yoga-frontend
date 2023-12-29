@@ -25,7 +25,7 @@ export default function ProtectedRoutes() {
         })
         .catch((err) => {
           setTimeout(() => setLoading(false), 500);
-          console.log(err);
+          // console.log(err);
           navigateTo("/", { state: { from: location }, replace: true });
         });
     }
