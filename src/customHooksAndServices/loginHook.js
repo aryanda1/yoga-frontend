@@ -9,6 +9,8 @@ const login = async (credentials) => {
     data: JSON.stringify(credentials),
   })
     .then((data) => {
+      if (data.data.user && data.data.user.payments.length > 0)
+        data.data.user.payments = processPayments(data.data.user.payments);
       return data;
     })
     .catch((err) => {
