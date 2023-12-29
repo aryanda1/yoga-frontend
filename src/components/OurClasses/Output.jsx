@@ -1,4 +1,4 @@
-import { css } from "@emotion/core";
+import { css } from "@emotion/react";
 
 const Output = ({ title, info, img }) => (
   <div css={styles} className="output">
