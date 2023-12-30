@@ -153,6 +153,45 @@ function Auth() {
     });
   }
 
+  const handleGoogleLogin = async (response) => {
+    setRequestInProgress(true);
+    const data = await login({
+      credential: response.credential,
+      type: "Google",
+    });
+    setRequestInProgress(false);
+    if (data.status === 200) {
+      setUser(data.data.user);
+      navigateTo("/");
+    } else {
+      window.alert(data.response.data);
+    }
+  };
+
+  useEffect(() => {
+    if (!isLogin) return;
+    /* global google */
+    console.log("out");
+    if (window.google) {
+      console.log("bi");
+      google.accounts.id.initialize({
+        client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+        callback: handleGoogleLogin,
+      });
+
+      google.accounts.id.renderButton(document.getElementById("loginDiv"), {
+        // type: "standard",
+        theme: "outline",
+        // size: "small",
+        text: "signin_with",
+        shape: "pill",
+        // width: "250",
+      });
+
+      // google.accounts.id.prompt()
+    }
+  }, [handleGoogleLogin, isLogin]);
+
   const handleLogin = async (e) => {
     setRequestInProgress(true);
     e.preventDefault();
@@ -165,12 +204,15 @@ function Auth() {
     if (!username || !password) {
       return;
     }
-    const data = await login({ username, loginPassword: password });
+    const data = await login({
+      credential: { username, loginPassword: password },
+    });
     setRequestInProgress(false);
     if (data.status === 200) {
       setUser(data.data.user);
       navigateTo("/");
     } else {
+      console.log(data.response.data);
       window.alert(data.response.data);
     }
   };
@@ -219,9 +261,14 @@ function Auth() {
 
   return (
     <div css={styles}>
-      <Card variant="outlined" sx={{ padding: 1 }} className="card">
+      <Card
+        variant="outlined"
+        sx={{ padding: 1 }}
+        className={`card ${isLogin ? "small" : ""}`}
+      >
         <Typography variant="h5" sx={{ mb: 2, textAlign: "center" }}>
-          Welcome to Training Studio. {isLogin ? "Signin" : "Signup"} below
+          Welcome to Training Studio. <br />
+          {isLogin ? "Signin" : "Signup"} below
         </Typography>
         <form onSubmit={isLogin ? handleLogin : handleRegister}>
           {!isLogin ? (
@@ -348,41 +395,32 @@ function Auth() {
                   aria-labelledby="demo-form-control-label-placement"
                   name="batch"
                   defaultValue="top"
+                  className="radioGroup"
                 >
-                  <Grid container spacing={0.5}>
-                    <Grid item xs={6}>
-                      <FormControlLabel
-                        value="1"
-                        control={<Radio onChange={inputChangeHandler} />}
-                        checked={input.batch === "1"}
-                        label="6-7AM"
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <FormControlLabel
-                        value="2"
-                        control={<Radio onChange={inputChangeHandler} />}
-                        checked={input.batch === "2"}
-                        label="7-8AM"
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <FormControlLabel
-                        value="3"
-                        control={<Radio onChange={inputChangeHandler} />}
-                        checked={input.batch === "3"}
-                        label="8-9AM"
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <FormControlLabel
-                        value="4"
-                        control={<Radio onChange={inputChangeHandler} />}
-                        checked={input.batch === "4"}
-                        label="5-6PM"
-                      />
-                    </Grid>
-                  </Grid>
+                  <FormControlLabel
+                    value="1"
+                    control={<Radio onChange={inputChangeHandler} />}
+                    checked={input.batch === "1"}
+                    label="6-7AM"
+                  />
+                  <FormControlLabel
+                    value="2"
+                    control={<Radio onChange={inputChangeHandler} />}
+                    checked={input.batch === "2"}
+                    label="7-8AM"
+                  />
+                  <FormControlLabel
+                    value="3"
+                    control={<Radio onChange={inputChangeHandler} />}
+                    checked={input.batch === "3"}
+                    label="8-9AM"
+                  />
+                  <FormControlLabel
+                    value="4"
+                    control={<Radio onChange={inputChangeHandler} />}
+                    checked={input.batch === "4"}
+                    label="5-6PM"
+                  />
                 </RadioGroup>
               </FormControl>
             </>
@@ -425,7 +463,7 @@ function Auth() {
             }}
           >
             <Typography>
-              {isLogin ? "Don't have a acouunt?" : "Already a member?"}
+              {isLogin ? "Don't have a account?" : "Already a member?"}
             </Typography>
             <Link
               to={`/auth?mode=${isLogin ? "signup" : "login"}`}
@@ -457,6 +495,20 @@ function Auth() {
           >
             {isLogin ? "Signin" : "Signup"}
           </Button>
+          {isLogin && (
+            <>
+              <div class="social-divider">
+                <div class="line">
+                  <span>or</span>
+                </div>
+                <p class="sc-ifyqMZ ejuIuc">
+                  To connect using one of these methods, the email must match
+                  the one on your Training Studio account.
+                </p>
+              </div>
+              <div id="loginDiv"></div>
+            </>
+          )}
         </form>
       </Card>
     </div>
@@ -473,9 +525,51 @@ const styles = css`
     max-width: 700px;
     margin-top: 2rem;
     margin-inline: auto;
+    &.small {
+      max-width: 500px;
+    }
+  }
+  .radioGroup {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+    column-gap: min(11vw, 5rem);
+  }
+  .social-divider {
+    margin-block: 1.5rem;
+    color: gray;
+    text-align: center;
+    .line {
+      margin-bottom: 0.75rem;
+      border-top: 1px solid black;
+      span {
+        position: relative;
+        top: -0.75rem;
+        background: white;
+        padding-inline: 0.5rem;
+      }
+    }
+  }
+  #loginDiv {
+    margin-block: 1.5rem;
+    & > * {
+      display: grid;
+      place-items: center;
+      margin-left: 15px; //centering the button
+    }
   }
   @media (max-width: 1000px) {
     padding-block: 70px 2rem;
+  }
+  @media (max-width: 450px) {
+    .radioGroup {
+      column-gap: 3vw;
+    }
+  }
+  @media (max-width: 350px) {
+    .radioGroup {
+      grid-template-columns: 1fr;
+    }
   }
 `;
 const styles2 = css`

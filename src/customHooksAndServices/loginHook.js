@@ -1,12 +1,13 @@
 import axiosService from "../axios/axiosBase";
 
-const login = async (credentials) => {
+const login = async ({ credential, type }) => {
   return axiosService("/api/user/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "X-Auth-Method": type ? type : "",
     },
-    data: JSON.stringify(credentials),
+    data: JSON.stringify({ credential }),
   })
     .then((data) => {
       if (data.data.user && data.data.user.payments.length > 0)
